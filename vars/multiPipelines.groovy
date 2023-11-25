@@ -139,3 +139,4 @@ def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) 
         }]
     })
 }
+
