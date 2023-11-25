@@ -18,7 +18,22 @@ def call() {
  * @return The list of Jenkinsfile paths for which corresponding items have been provisioned.
  */
 List<String> provisionItems(String rootFolderPath, String repositoryURL) {
+    //Plugins to install
+        // 1) Basic Branch Build Strategies Plugin
+        // 2) pipeline-utility-steps
+        // 3) job-dsl
     // Find all Jenkinsfiles.
+    //https://stackoverflow.com/q/50675533
+    // https://plugins.jenkins.io/pipeline-utility-steps/
+    //https://stackoverflow.com/a/50700189
+    //https://stackoverflow.com/questions/70564549/jenkins-pipeline-no-such-dsl-method-jobdsl-found
+    //https://stackoverflow.com/questions/43699190/seed-job-asks-for-script-approval-in-jenkins
+    // By default, Jenkins notifies GitHub with a constant context, i.e. a string that check multibranch.groovy file line 108
+    // identifies the check. We want each individual build result to have its own context so
+    // they do not conflict. Requires the github-scm-trait-notification-context-plugin to be
+    // installed on the Jenkins instance.
+    //https://stackoverflow.com/a/58989575
+    //Other security issue do come up for approval
     List<String> jenkinsfilePaths = findFiles(glob: '**/*/Jenkinsfile').collect { it.path }
 
     // Provision folder and Multibranch Pipelines.
