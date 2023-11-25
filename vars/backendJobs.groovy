@@ -1,31 +1,50 @@
-// In your shared library vars/dynamicJobs.groovy
+def getCiPipeline() {
+    return {
+        node {
+            def workspaceDir
+            stage('Checkout Code') {
+                checkout scm
+            }
 
-def call(String submodule = null) {
-    node {
-        if (submodule) {
-            echo "Trying to build using shared library....."
-            buildSubmodule(submodule)
-        } else {
-            echo "No submodule specified. Skipping submodule build."
-        }
-    }
-}
-
-def buildSubmodule(submodule) {
-    pipeline {
-        agent any
-        triggers {
-            githubPush()
-        }
-        stages {
-            stage('Build') {
-                steps {
-                    echo "Building ${submodule}"
-                    // Trigger the submodule Jenkinsfile or build process
-                    // Example: build job: "${submodule}/Jenkinsfile" or mvn -f ${submodule} clean install
+            stage('Unit Test') {
+                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
+                dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo running uni tests in ${workspaceDir}"
                 }
             }
-            // Add more stages or jobs for each submodule as needed
+
+            stage('Quality Gate') {
+                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
+                dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo checking  quality in ${workspaceDir}"
+
+                }
+            }
+
+            stage('Set Image Version') {
+                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
+                dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo setting image version"
+                }
+            }
+
+            stage('Set Image Name') {
+                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
+                dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo setting  docker image name in ${workspaceDir}"
+                }
+            }
+
+            stage('Build Docker Image') {
+                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
+                dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo Building docker image in ${workspaceDir}"
+                }
+            }
+
+
+
         }
+
     }
 }
