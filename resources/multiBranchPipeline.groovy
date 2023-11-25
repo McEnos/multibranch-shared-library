@@ -1,11 +1,20 @@
 import java.nio.file.*
 
-// `jenkinsfilePathsStr` and `rootFolderStr` are global variables that are set through `jobDsl`'s `additionalParameters`
-List<Path> jenkinsfilePaths = jenkinsfilePathsStr.collect { Paths.get(it) }
-Path rootFolder = Paths.get(rootFolderStr)
 
-generateFolders(jenkinsfilePaths, rootFolder)
-generateMultibranchPipelines(jenkinsfilePaths, rootFolder, repositoryURL)
+/**
+ * Get all ancestor folders paths.
+ * <pre>
+ *     ancestorFoldersPath(Paths.get('root/parent/child/file'))
+ *     // returns [root, root/parent, root/parent/child]
+ * </pre>
+ * @param path A path.
+ * @return All its ancestors paths.
+ */
+// `jenkinsfilePathsStr` and `rootFolderStr` are global variables that are set through `jobDsl`'s `additionalParameters`
+List<Path> ancestorFoldersPath(Path path) {
+    if (path.parent == null) return []
+    ancestorFoldersPath(path.parent) + [path.parent]
+}
 
 
 /**
@@ -23,21 +32,6 @@ def generateFolders(List<Path> jenkinsfilePaths, Path rootFolder) {
                 folder(it.toString())
             }
 }
-
-/**
- * Get all ancestor folders paths.
- * <pre>
- *     ancestorFoldersPath(Paths.get('root/parent/child/file'))
- *     // returns [root, root/parent, root/parent/child]
- * </pre>
- * @param path A path.
- * @return All its ancestors paths.
- */
-List<Path> ancestorFoldersPath(Path path) {
-    if (path.parent == null) return []
-    ancestorFoldersPath(path.parent) + [path.parent]
-}
-
 
 /**
  * Generate Multibranch Pipelines.
@@ -79,17 +73,6 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                             credentialsId('token_pat')
 
                             traits {
-
-                                sparseCheckoutPathsTrait {
-                                    extension {
-                                        sparseCheckoutPaths {
-                                            sparseCheckoutPath {
-                                                path("$pipelineName/*")
-                                            }
-                                        }
-                                    }
-                                }
-
                                 // Depending on your preferences and root pipeline configuration, you can decide to
                                 // discover branches, pull requests, perhaps even tags.
                                 gitHubBranchDiscovery {
@@ -98,8 +81,6 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                                 gitHubPullRequestDiscovery {
                                     strategyId(USE_CURRENT_SOURCE_STRATEGY_ID)
                                 }
-
-//                                gitHubTagDiscovery()
 
                                 // By default, Jenkins notifies GitHub with a constant context, i.e. a string that
                                 // identifies the check. We want each individual build result to have its own context so
@@ -127,7 +108,6 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                     }
                 }
             }
-
             factory {
                 workflowBranchProjectFactory {
                     scriptPath(jenkinsfilePath.toString())
@@ -135,14 +115,25 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
             }
             orphanedItemStrategy {
                 discardOldItems {
+                    // Keeping pipelines a few days for branches that do not exist anymore can be useful for
+                    // troubleshooting purposes.
                     daysToKeep(3)
                 }
             }
             triggers {
                 periodicFolderTrigger {
-                    interval('5m')
+                    // Scan branches once a week at least to remove orphan pipelines.
+                    interval('7d')
                 }
             }
         }
     }
 }
+
+// `jenkinsfilePathsStr` and `rootFolderStr` are global variables that are set through `jobDsl`'s `additionalParameters`
+// options.
+List<Path> jenkinsfilePaths = jenkinsfilePathsStr.collect { Paths.get(it) }
+Path rootFolder = Paths.get(rootFolderStr)
+
+generateFolders(jenkinsfilePaths, rootFolder)
+generateMultibranchPipelines(jenkinsfilePaths, rootFolder, repositoryURL)

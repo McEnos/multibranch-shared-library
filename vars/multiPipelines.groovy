@@ -60,12 +60,9 @@ String getBaselineRevision() {
     // Depending on your seed pipeline configuration and preferences, you can set the baseline revision to a target
     // branch, e.g. the repository's default branch or even `env.CHANGE_TARGET` if Jenkins is configured to discover
     // pull requests.
-    // Look for the first existing revision. Commits can be removed (e.g. with a `git push --force`), so a
+    [env.GIT_PREVIOUS_SUCCESSFUL_COMMIT, env.GIT_PREVIOUS_COMMIT]
+    // Look for the first existing existing revision. Commits can be removed (e.g. with a `git push --force`), so a
     // previous build revision may not exist anymore.
-    //print("CHANGE_TARGET :", env.CHANGE_TARGET)
-   // print("GIT_PREVIOUS_SUCCESSFUL_COMMIT:", env.GIT_PREVIOUS_SUCCESSFUL_COMMIT)
-   // print("GIT_PREVIOUS_COMMIT:", env.GIT_PREVIOUS_COMMIT)
-    [env.GIT_PREVIOUS_SUCCESSFUL_COMMIT, env.GIT_PREVIOUS_COMMIT, env.CHANGE_TARGET]
             .find { revision ->
                 revision != null && sh(script: "git rev-parse --quiet --verify $revision", returnStdout: true) == 0
             } ?: 'HEAD^'
@@ -105,6 +102,7 @@ static List<String> findRelevantMultibranchPipelines(List<String> changedFilesPa
     }.unique()
 }
 
+
 /**
  * Get the list of Multibranch Pipelines that should be run according to the changeset.
  * @param jenkinsfilePaths The list of Jenkinsfiles paths.
@@ -113,6 +111,7 @@ static List<String> findRelevantMultibranchPipelines(List<String> changedFilesPa
 List<String> findMultibranchPipelinesToRun(List<String> jenkinsfilePaths) {
     findRelevantMultibranchPipelines(getChangedDirectories(baselineRevision), jenkinsfilePaths)
 }
+
 
 /**
  * Run pipelines.
@@ -123,11 +122,9 @@ def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) 
     parallel(multibranchPipelinesToRun.inject([:]) { stages, multibranchPipelineToRun ->
         stages + [("Build $multibranchPipelinesToRun"): {
             def pipelineName = "$rootFolderPath/$multibranchPipelinesToRun/${URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')}"
-
             // For new branches, Jenkins will receive an event from the version control system to provision the
             // corresponding Pipeline under the Multibranch Pipeline item. We have to wait for Jenkins to process the
             // event so a build can be triggered.
-            print("Pipe $pipelineName")
             timeout(time: 5, unit: 'MINUTES') {
                 waitUntil(initialRecurrencePeriod: 1e3) {
                     def pipeline = Jenkins.instance.getItemByFullName(pipelineName)
@@ -136,7 +133,7 @@ def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) 
             }
 
             // Trigger downstream builds.
-            build(job: pipelineName, propagate: true, wait: false)
+            build(job: pipelineName, propagate: true, wait: true)
         }]
     })
 }
