@@ -1,53 +1,50 @@
-// In your shared library vars/dynamicJobs.groovy
+def getCiPipeline() {
+    return {
+        node {
+            def workspaceDir
+            stage('Checkout Code') {
+                checkout scm
+            }
 
-def call(String submodule = null) {
-    if (submodule) {
-        createJob(submodule)
-    } else {
-        setupMultiBranchPipeline()
-    }
-}
-
-def createJob(submodule) {
-    pipeline {
-        agent any
-        triggers {
-            githubPush()
-        }
-        stages {
-            stage('Build') {
-                steps {
-                    echo "Building ${submodule}"
-                    // Trigger the submodule Jenkinsfile or build process
-                    // Example: build job: "${submodule}/Jenkinsfile" or mvn -f ${submodule} clean install
+            stage('Unit Test') {
+                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
+                dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo running uni tests in ${workspaceDir}"
                 }
             }
-            // Add more stages or jobs for each submodule as needed
-        }
-    }
-}
 
-def setupMultiBranchPipeline() {
-    properties([pipelineTriggers([
-            [$class: 'GitHubPushTrigger'],
-    ])])
+            stage('Quality Gate') {
+                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
+                dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo checking  quality in ${workspaceDir}"
 
-    triggers {
-        githubPush()
-    }
-
-    branches {
-        branchFilter('*/main') // Adjust the branch filter based on your branch naming
-        //branchFilter('*/feature/*') // Example: include feature branches
-    }
-
-    configure { project ->
-        // Customize multi-branch pipeline configuration if needed
-        project / sources / data /jenkins.branch.BranchSource[sourceOwner="multiBranch"] / traits {
-            gitBranchDiscovery {
-                strategyId(1)
-                trust(Classroom.TRAUST_ALL_CERTIFICATES)
+                }
             }
+
+            stage('Set Image Version') {
+                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
+                dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo setting image version"
+                }
+            }
+
+            stage('Set Image Name') {
+                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
+                dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo setting  docker image name in ${workspaceDir}"
+                }
+            }
+
+            stage('Build Docker Image') {
+                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
+                dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo Building docker image in ${workspaceDir}"
+                }
+            }
+
+
+
         }
+
     }
 }
