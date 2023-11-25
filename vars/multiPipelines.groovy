@@ -118,6 +118,8 @@ List<String> findMultibranchPipelinesToRun(List<String> jenkinsfilePaths) {
 def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) {
     parallel(multibranchPipelinesToRun.inject([:]) { stages, multibranchPipelineToRun ->
         stages + [("Building>>> $multibranchPipelinesToRun"): {
+            print("Git url>>> $env.GIT_URL")
+            print("Git Branch>>> $env.GIT_BRANCH")
             def pipelineName = "$rootFolderPath/$multibranchPipelineToRun/${(env.GIT_BRANCH ?: env.CHANGE_BRANCH).split('/')[1]}"
             // For new branches, Jenkins will receive an event from the version control system to provision the
             // corresponding Pipeline under the Multibranch Pipeline item. We have to wait for Jenkins to process the
