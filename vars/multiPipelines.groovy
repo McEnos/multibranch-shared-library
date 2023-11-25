@@ -126,10 +126,10 @@ def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) 
             // corresponding Pipeline under the Multibranch Pipeline item. We have to wait for Jenkins to process the
             // event so a build can be triggered.
            // timeout(time: 5, unit: 'MINUTES') {
-                waitUntil(initialRecurrencePeriod: 1e3) {
+              //  waitUntil(initialRecurrencePeriod: 1e3) {
                     def pipeline = Jenkins.instance.getItemByFullName(pipelineName)
                     pipeline && !pipeline.isDisabled()
-                }
+              //  }
          //   }
 
             // Trigger downstream builds.
