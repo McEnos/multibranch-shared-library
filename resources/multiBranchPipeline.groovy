@@ -79,6 +79,17 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                             credentialsId('token_pat')
 
                             traits {
+
+                                sparseCheckoutPathsTrait {
+                                    extension {
+                                        sparseCheckoutPaths {
+                                            sparseCheckoutPath {
+                                                path("$pipelineName/*")
+                                            }
+                                        }
+                                    }
+                                }
+
                                 // Depending on your preferences and root pipeline configuration, you can decide to
                                 // discover branches, pull requests, perhaps even tags.
                                 gitHubBranchDiscovery {
@@ -87,6 +98,8 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                                 gitHubPullRequestDiscovery {
                                     strategyId(USE_CURRENT_SOURCE_STRATEGY_ID)
                                 }
+
+//                                gitHubTagDiscovery()
 
                                 // By default, Jenkins notifies GitHub with a constant context, i.e. a string that
                                 // identifies the check. We want each individual build result to have its own context so
@@ -114,6 +127,7 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                     }
                 }
             }
+
             factory {
                 workflowBranchProjectFactory {
                     scriptPath(jenkinsfilePath.toString())
@@ -121,8 +135,6 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
             }
             orphanedItemStrategy {
                 discardOldItems {
-                    // Keeping pipelines a few days for branches that do not exist anymore can be useful for
-                    // troubleshooting purposes.
                     daysToKeep(3)
                 }
             }

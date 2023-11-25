@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b37151a-8829-48c5-b64f-e83129dcba4c" name="Changes" comment="Added these for documentation" />
+    <list default="true" id="3b37151a-8829-48c5-b64f-e83129dcba4c" name="Changes" comment="Added these">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/multiBranchPipeline.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/resources/multiBranchPipeline.groovy" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,7 +96,7 @@
       <option name="presentableId" value="Default" />
       <updated>1700302727872</updated>
       <workItem from="1700302738176" duration="935000" />
-      <workItem from="1700882843949" duration="17492000" />
+      <workItem from="1700882843949" duration="20408000" />
     </task>
     <task id="LOCAL-00001" summary="Updated shared library.">
       <option name="closed" value="true" />
@@ -135,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700912005336</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added these">
+      <option name="closed" value="true" />
+      <created>1700912380726</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1700912380726</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,6 +166,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated shared library." />
     <MESSAGE value="Added these for documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added these for documentation" />
+    <MESSAGE value="Added these" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added these" />
   </component>
 </project>
