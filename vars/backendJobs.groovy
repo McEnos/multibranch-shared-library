@@ -1,10 +1,13 @@
 // In your shared library vars/dynamicJobs.groovy
 
 def call(String submodule = null) {
-    if (submodule) {
-        buildSubmodule(submodule)
-    } else {
-        echo "No submodule specified. Skipping submodule build."
+    node {
+        if (submodule) {
+            echo "Trying to build using shared library....."
+            buildSubmodule(submodule)
+        } else {
+            echo "No submodule specified. Skipping submodule build."
+        }
     }
 }
 
