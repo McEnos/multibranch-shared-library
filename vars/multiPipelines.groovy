@@ -4,8 +4,7 @@ import java.nio.file.*
  * The step entry point.
  */
 def call() {
-    String repositoryName = env.JOB_NAME.split('/')[1]
-    String rootFolderPath = "Generated/$repositoryName"
+    String rootFolderPath = "backend_ci"
 
     List<String> jenkinsfilePaths = provisionItems(rootFolderPath, env.GIT_URL)
     List<String> multibranchPipelinesToRun = findMultibranchPipelinesToRun(jenkinsfilePaths)
@@ -122,11 +121,12 @@ List<String> findMultibranchPipelinesToRun(List<String> jenkinsfilePaths) {
  */
 def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) {
     parallel(multibranchPipelinesToRun.inject([:]) { stages, multibranchPipelineToRun ->
-        stages + [("Building $multibranchPipelinesToRun"): {
-            def pipelineName = "$rootFolderPath/$multibranchPipelinesToRun/${URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')}"
+        stages + [("Build $multibranchPipelinesToRun"): {
+            def pipelineName = "$rootFolderPath/$multibranchPipelineToRun/${(env.GIT_BRANCH ?: env.CHANGE_BRANCH).split('/')[1]}"
             // For new branches, Jenkins will receive an event from the version control system to provision the
             // corresponding Pipeline under the Multibranch Pipeline item. We have to wait for Jenkins to process the
             // event so a build can be triggered.
+            print("Pipe $pipelineName")
             timeout(time: 5, unit: 'MINUTES') {
                 waitUntil(initialRecurrencePeriod: 1e3) {
                     def pipeline = Jenkins.instance.getItemByFullName(pipelineName)
@@ -135,7 +135,7 @@ def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) 
             }
 
             // Trigger downstream builds.
-            build(job: pipelineName, propagate: true, wait: true)
+            build(job: pipelineName, propagate: true, wait: false)
         }]
     })
 }
