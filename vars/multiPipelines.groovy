@@ -117,13 +117,13 @@ List<String> findMultibranchPipelinesToRun(List<String> jenkinsfilePaths) {
  */
 def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) {
     parallel(multibranchPipelinesToRun.inject([:]) { stages, multibranchPipelineToRun ->
-        stages + [("Building>>> $multibranchPipelinesToRun"): {
+        stages + [("Building $multibranchPipelinesToRun"): {
            //def pipelineName = "$rootFolderPath/$multibranchPipelineToRun/${(env.GIT_BRANCH ?: env.CHANGE_BRANCH).split('/')[1]}"
-          //  def pipelineName = "$rootFolderPath/$multibranchPipelinesToRun/${URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')}"
+            def pipelineName = "$rootFolderPath/$multibranchPipelinesToRun/${URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')}"
             // For new branches, Jenkins will receive an event from the version control system to provision the
             // corresponding Pipeline under the Multibranch Pipeline item. We have to wait for Jenkins to process the
             // event so a build can be triggered.
-            def pipelineName = "multibranch/service-2/main"
+           // def pipelineName = "multibranch/service-2/main"
             print("Pipe $pipelineName")
             def pipeline = Jenkins.instance.getItemByFullName(pipelineName)
             pipeline && !pipeline.isDisabled()
