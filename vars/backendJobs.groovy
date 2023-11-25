@@ -37,11 +37,17 @@ def setupMultiBranchPipeline() {
     }
 
     branches {
-        branchFilter('master')
-        branchFilter('*')
+        branchFilter('*/main') // Adjust the branch filter based on your branch naming
+        //branchFilter('*/feature/*') // Example: include feature branches
     }
 
     configure { project ->
         // Customize multi-branch pipeline configuration if needed
+        project / sources / data /jenkins.branch.BranchSource[sourceOwner="multiBranch"] / traits {
+            gitBranchDiscovery {
+                strategyId(1)
+                trust(Classroom.TRAUST_ALL_CERTIFICATES)
+            }
+        }
     }
 }
