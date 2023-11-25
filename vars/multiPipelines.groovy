@@ -121,7 +121,7 @@ def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) 
              print("Resulting rootFolderPath>>> $rootFolderPath")
             print("Resulting multibranchPipelineToRun>>> $multibranchPipelineToRun")
            //def pipelineName = "$rootFolderPath/$multibranchPipelineToRun/${(env.GIT_BRANCH ?: env.CHANGE_BRANCH).split('/')[1]}"
-            def pipelineName = "$rootFolderPath/$multibranchPipelineToRun/${(env.GIT_BRANCH ?: env.CHANGE_BRANCH).split('/').length > 1 ? (env.GIT_BRANCH ?: env.CHANGE_BRANCH).split('/')[1] : ''}"
+            def pipelineName = "$rootFolderPath/$multibranchPipelinesToRun/${URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')}"
 
             print("Resulting pipeline>>> $pipelineName")
             // For new branches, Jenkins will receive an event from the version control system to provision the
