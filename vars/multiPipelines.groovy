@@ -123,7 +123,7 @@ def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) 
             // For new branches, Jenkins will receive an event from the version control system to provision the
             // corresponding Pipeline under the Multibranch Pipeline item. We have to wait for Jenkins to process the
             // event so a build can be triggered.
-            def pipelineName = "backend-services/service-2/main"
+            def pipelineName = "multibranch/service-2/main"
             print("Pipe $pipelineName")
             def pipeline = Jenkins.instance.getItemByFullName(pipelineName)
             pipeline && !pipeline.isDisabled()
