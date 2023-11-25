@@ -63,9 +63,9 @@ String getBaselineRevision() {
     // pull requests.
     // Look for the first existing revision. Commits can be removed (e.g. with a `git push --force`), so a
     // previous build revision may not exist anymore.
-    print("CHANGE_TARGET :", env.CHANGE_TARGET)
-    print("GIT_PREVIOUS_SUCCESSFUL_COMMIT:", env.GIT_PREVIOUS_SUCCESSFUL_COMMIT)
-    print("GIT_PREVIOUS_COMMIT:", env.GIT_PREVIOUS_COMMIT)
+    //print("CHANGE_TARGET :", env.CHANGE_TARGET)
+   // print("GIT_PREVIOUS_SUCCESSFUL_COMMIT:", env.GIT_PREVIOUS_SUCCESSFUL_COMMIT)
+   // print("GIT_PREVIOUS_COMMIT:", env.GIT_PREVIOUS_COMMIT)
     [env.GIT_PREVIOUS_SUCCESSFUL_COMMIT, env.GIT_PREVIOUS_COMMIT, env.CHANGE_TARGET]
             .find { revision ->
                 revision != null && sh(script: "git rev-parse --quiet --verify $revision", returnStdout: true) == 0
