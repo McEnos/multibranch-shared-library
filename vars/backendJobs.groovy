@@ -1,14 +1,13 @@
-def call() {
-    // Change the directory to backend-services
-    dir('backend-services') {
-        // Get a list of submodules
-        def submodules = sh(script: 'find . -name "Jenkinsfile" -exec dirname {} \\; | xargs -n1 basename', returnStdout: true).trim().split('\n')
-        // Dynamically create Jenkins jobs for each submodule
-        for (submodule in submodules) {
-            createJob(submodule)
-        }
+// In your shared library vars/dynamicJobs.groovy
+
+def call(String submodule = null) {
+    if (submodule) {
+        createJob(submodule)
+    } else {
+        setupMultiBranchPipeline()
     }
 }
+
 def createJob(submodule) {
     pipeline {
         agent any
@@ -25,15 +24,24 @@ def createJob(submodule) {
             }
             // Add more stages or jobs for each submodule as needed
         }
-         stage('Test') {
-                steps {
-                    echo "Testing $projectName"
-                }
-            }
-            stage('Deploy') {
-                steps {
-                    echo "Deploying $projectName"
-                }
-            }
+    }
+}
+
+def setupMultiBranchPipeline() {
+    properties([pipelineTriggers([
+            [$class: 'GitHubPushTrigger'],
+    ])])
+
+    triggers {
+        githubPush()
+    }
+
+    branches {
+        branchFilter('master')
+        branchFilter('*')
+    }
+
+    configure { project ->
+        // Customize multi-branch pipeline configuration if needed
     }
 }
