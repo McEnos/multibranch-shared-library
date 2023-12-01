@@ -18,22 +18,7 @@ def call() {
  * @return The list of Jenkinsfile paths for which corresponding items have been provisioned.
  */
 List<String> provisionItems(String rootFolderPath, String repositoryURL) {
-    //Plugins to install
-        // 1) Basic Branch Build Strategies Plugin
-        // 2) pipeline-utility-steps
-        // 3) job-dsl
     // Find all Jenkinsfiles.
-    //https://stackoverflow.com/q/50675533
-    // https://plugins.jenkins.io/pipeline-utility-steps/
-    //https://stackoverflow.com/a/50700189
-    //https://stackoverflow.com/questions/70564549/jenkins-pipeline-no-such-dsl-method-jobdsl-found
-    //https://stackoverflow.com/questions/43699190/seed-job-asks-for-script-approval-in-jenkins
-    // By default, Jenkins notifies GitHub with a constant context, i.e. a string that check multibranch.groovy file line 108
-    // identifies the check. We want each individual build result to have its own context so
-    // they do not conflict. Requires the github-scm-trait-notification-context-plugin to be
-    // installed on the Jenkins instance.
-    //https://stackoverflow.com/a/58989575
-    //Other security issue do come up for approval
     List<String> jenkinsfilePaths = findFiles(glob: '**/*/Jenkinsfile').collect { it.path }
 
     // Provision folder and Multibranch Pipelines.
@@ -60,9 +45,9 @@ String getBaselineRevision() {
     // Depending on your seed pipeline configuration and preferences, you can set the baseline revision to a target
     // branch, e.g. the repository's default branch or even `env.CHANGE_TARGET` if Jenkins is configured to discover
     // pull requests.
-    [env.GIT_PREVIOUS_SUCCESSFUL_COMMIT, env.GIT_PREVIOUS_COMMIT]
     // Look for the first existing existing revision. Commits can be removed (e.g. with a `git push --force`), so a
     // previous build revision may not exist anymore.
+    [env.GIT_PREVIOUS_SUCCESSFUL_COMMIT, env.GIT_PREVIOUS_COMMIT, env.CHANGE_TARGET]
             .find { revision ->
                 revision != null && sh(script: "git rev-parse --quiet --verify $revision", returnStdout: true) == 0
             } ?: 'HEAD^'
@@ -90,7 +75,6 @@ List<String> getChangedDirectories(String baselineRevision) {
  * @return A list of Pipeline names, relative to the repository root.
  */
 // `java.nio.file.Path(s)` instances are not serializable, so we have to add the following annotation.
-@NonCPS
 static List<String> findRelevantMultibranchPipelines(List<String> changedFilesPathStr, List<String> jenkinsfilePathsStr) {
     List<Path> changedFilesPath = changedFilesPathStr.collect { Paths.get(it) }
     List<Path> jenkinsfilePaths = jenkinsfilePathsStr.collect { Paths.get(it) }
@@ -102,7 +86,6 @@ static List<String> findRelevantMultibranchPipelines(List<String> changedFilesPa
     }.unique()
 }
 
-
 /**
  * Get the list of Multibranch Pipelines that should be run according to the changeset.
  * @param jenkinsfilePaths The list of Jenkinsfiles paths.
@@ -112,7 +95,6 @@ List<String> findMultibranchPipelinesToRun(List<String> jenkinsfilePaths) {
     findRelevantMultibranchPipelines(getChangedDirectories(baselineRevision), jenkinsfilePaths)
 }
 
-
 /**
  * Run pipelines.
  * @param rootFolderPath The common root folder of Multibranch Pipelines.
@@ -121,10 +103,11 @@ List<String> findMultibranchPipelinesToRun(List<String> jenkinsfilePaths) {
 def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) {
     parallel(multibranchPipelinesToRun.inject([:]) { stages, multibranchPipelineToRun ->
         stages + [("Build $multibranchPipelinesToRun"): {
-            def pipelineName = "$rootFolderPath/$multibranchPipelinesToRun/${URLEncoder.encode(env.CHANGE_BRANCH ?: env.GIT_BRANCH, 'UTF-8')}"
+            def pipelineName = "$rootFolderPath/$multibranchPipelineToRun/${(env.GIT_BRANCH ?: env.CHANGE_BRANCH).split('/')[1]}"
             // For new branches, Jenkins will receive an event from the version control system to provision the
             // corresponding Pipeline under the Multibranch Pipeline item. We have to wait for Jenkins to process the
             // event so a build can be triggered.
+            print("Pipe $pipelineName")
             timeout(time: 5, unit: 'MINUTES') {
                 waitUntil(initialRecurrencePeriod: 1e3) {
                     def pipeline = Jenkins.instance.getItemByFullName(pipelineName)
@@ -133,8 +116,7 @@ def runPipelines(String rootFolderPath, List<String> multibranchPipelinesToRun) 
             }
 
             // Trigger downstream builds.
-            build(job: pipelineName, propagate: true, wait: true)
+            build(job: pipelineName, propagate: true, wait: false)
         }]
     })
 }
-
