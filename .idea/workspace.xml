@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b37151a-8829-48c5-b64f-e83129dcba4c" name="Changes" comment="New changes">
+    <list default="true" id="3b37151a-8829-48c5-b64f-e83129dcba4c" name="Changes" comment="New changes here">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/multiBranchPipeline.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/resources/multiBranchPipeline.groovy" afterDir="false" />
     </list>
@@ -20,7 +20,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -100,7 +99,7 @@
       <workItem from="1700302738176" duration="935000" />
       <workItem from="1700882843949" duration="24844000" />
       <workItem from="1701244115243" duration="848000" />
-      <workItem from="1701428417270" duration="2598000" />
+      <workItem from="1701428417270" duration="10043000" />
     </task>
     <task id="LOCAL-00001" summary="Updated shared library.">
       <option name="closed" value="true" />
@@ -190,7 +189,23 @@
       <option name="project" value="LOCAL" />
       <updated>1700917175979</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="New changes">
+      <option name="closed" value="true" />
+      <created>1701432070271</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1701432070271</updated>
+    </task>
+    <task id="LOCAL-00013" summary="New changes here">
+      <option name="closed" value="true" />
+      <created>1701433713291</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1701433713291</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,6 +230,7 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
     <MESSAGE value="update" />
     <MESSAGE value="New changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="New changes" />
+    <MESSAGE value="New changes here" />
+    <option name="LAST_COMMIT_MESSAGE" value="New changes here" />
   </component>
 </project>
