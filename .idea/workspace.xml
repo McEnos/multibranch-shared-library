@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b37151a-8829-48c5-b64f-e83129dcba4c" name="Changes" comment="New major changes">
+    <list default="true" id="3b37151a-8829-48c5-b64f-e83129dcba4c" name="Changes" comment="Add building stage">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BackendPipeline.groovy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vars/backendPipeline.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/vars/backendPipeline.groovy" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +100,7 @@
       <workItem from="1700302738176" duration="935000" />
       <workItem from="1700882843949" duration="24844000" />
       <workItem from="1701244115243" duration="848000" />
-      <workItem from="1701428417270" duration="21242000" />
+      <workItem from="1701428417270" duration="22333000" />
     </task>
     <task id="LOCAL-00001" summary="Updated shared library.">
       <option name="closed" value="true" />
@@ -238,7 +238,31 @@
       <option name="project" value="LOCAL" />
       <updated>1701489129242</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="New major changes">
+      <option name="closed" value="true" />
+      <created>1701575084879</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1701575084879</updated>
+    </task>
+    <task id="LOCAL-00019" summary="New major changes">
+      <option name="closed" value="true" />
+      <created>1701575158059</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1701575158059</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Add building stage">
+      <option name="closed" value="true" />
+      <created>1701575889187</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1701575889187</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,6 +291,7 @@
     <MESSAGE value="New changes , was using wrong token ID" />
     <MESSAGE value="added new backend pipeline" />
     <MESSAGE value="New major changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="New major changes" />
+    <MESSAGE value="Add building stage" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add building stage" />
   </component>
 </project>
