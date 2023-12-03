@@ -8,9 +8,9 @@ def getCiPipeline() {
 
             stage('Building service') {
                 workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
-                dir("${env.WORKSPACE}/${workspaceDir}") {
+                dir("${env.WORKSPACE}") {
                     sh "chmod +x mvnw"
-                    sh "./mvnw clean install -DskipTests"
+                    sh "./mvnw clean install -DskipTests -pl ${workspaceDir} -am"
                 }
             }
 
