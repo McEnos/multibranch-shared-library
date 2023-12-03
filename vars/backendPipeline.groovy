@@ -6,10 +6,11 @@ def getCiPipeline() {
                 checkout scm
             }
 
-            stage('Unit Test') {
+            stage('Building service') {
                 workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
                 dir("${env.WORKSPACE}/${workspaceDir}") {
-                    sh "echo running uni tests in ${workspaceDir}"
+                    sh "chmod +x mvnw"
+                    sh "mvnw clean install"
                 }
             }
 
