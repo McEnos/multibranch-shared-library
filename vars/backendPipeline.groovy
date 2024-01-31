@@ -9,9 +9,9 @@ def getCiPipeline() {
             stage('Building Docker Image') {
                 workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
                 dir("${env.WORKSPACE}/${workspaceDir}") {
-                    sh "echo Building latest docker image"
+                    sh "echo compiling and  building latest docker image"
                     sh "chmod +x mvnw"
-                    sh "./mvnw jib:dockerBuild"
+                    sh "./mvnw compile jib:build -DsendCredentialsOverHttp=true"
                 }
             }
         }
