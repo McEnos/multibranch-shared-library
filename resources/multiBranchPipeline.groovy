@@ -76,7 +76,7 @@ def generateMultibranchPipelines(List<Path> jenkinsfilePaths, Path rootFolder, S
                             configuredByUrl(false)
 
                             // Make sure to properly set this.
-                            credentialsId('token-pat')
+                            credentialsId('personal-pat')
 
                             traits {
 

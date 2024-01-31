@@ -6,45 +6,14 @@ def getCiPipeline() {
                 checkout scm
             }
 
-            stage('Building service') {
+            stage('Building Docker Image') {
                 workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
                 dir("${env.WORKSPACE}/${workspaceDir}") {
+                    sh "echo Building latest docker image"
                     sh "chmod +x mvnw"
-                    sh "./mvnw clean install -DskipTests"
+                    sh "./mvnw jib:dockerBuild"
                 }
             }
-
-            stage('Quality Gate') {
-                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
-                dir("${env.WORKSPACE}/${workspaceDir}") {
-                    sh "echo checking  quality in ${workspaceDir}"
-
-                }
-            }
-
-            stage('Set Image Version') {
-                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
-                dir("${env.WORKSPACE}/${workspaceDir}") {
-                    sh "echo setting image version"
-                }
-            }
-
-            stage('Set Image Name') {
-                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
-                dir("${env.WORKSPACE}/${workspaceDir}") {
-                    sh "echo setting  docker image name in ${workspaceDir}"
-                }
-            }
-
-            stage('Build Docker Image') {
-                workspaceDir = sh(script: 'ls -d */|head -n 1', returnStdout: true).trim()
-                dir("${env.WORKSPACE}/${workspaceDir}") {
-                    sh "echo Building docker image in ${workspaceDir}"
-                }
-            }
-
-
-
         }
 
     }

@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3b37151a-8829-48c5-b64f-e83129dcba4c" name="Changes" comment="bug fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multibranch-shared-library.iml" beforeDir="false" afterPath="$PROJECT_DIR$/multibranch-shared-library.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/multiBranchPipeline.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/resources/multiBranchPipeline.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vars/backendPipeline.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/vars/backendPipeline.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vars/multiPipelines.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/vars/multiPipelines.groovy" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,20 +72,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/Backup/Projects/multibranch-shared-library/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Personal/projects/multibranch-shared-library&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Backup\Projects\multibranch-shared-library\src" />
@@ -101,6 +106,14 @@
       <workItem from="1700882843949" duration="24844000" />
       <workItem from="1701244115243" duration="848000" />
       <workItem from="1701428417270" duration="25495000" />
+      <workItem from="1706092967346" duration="1409000" />
+      <workItem from="1706153512932" duration="59000" />
+      <workItem from="1706161717904" duration="4002000" />
+      <workItem from="1706241022564" duration="3830000" />
+      <workItem from="1706247530373" duration="123000" />
+      <workItem from="1706253296917" duration="1569000" />
+      <workItem from="1706536516812" duration="414000" />
+      <workItem from="1706624868597" duration="1023000" />
     </task>
     <task id="LOCAL-00001" summary="Updated shared library.">
       <option name="closed" value="true" />
