@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3b37151a-8829-48c5-b64f-e83129dcba4c" name="Changes" comment="bug fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multibranch-shared-library.iml" beforeDir="false" afterPath="$PROJECT_DIR$/multibranch-shared-library.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/multiBranchPipeline.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/resources/multiBranchPipeline.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vars/backendPipeline.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/vars/backendPipeline.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vars/multiPipelines.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/vars/multiPipelines.groovy" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,12 +37,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1700890017" />
+                    <option name="branchName" value="updates" />
+                    <option name="lastUsedInstant" value="1706673901" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="library" />
-                    <option name="lastUsedInstant" value="1700883649" />
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1700890017" />
                   </RecentBranch>
                 </list>
               </option>
@@ -77,7 +74,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;updates&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/Personal/projects/multibranch-shared-library&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -114,6 +111,10 @@
       <workItem from="1706253296917" duration="1569000" />
       <workItem from="1706536516812" duration="414000" />
       <workItem from="1706624868597" duration="1023000" />
+      <workItem from="1706673497496" duration="633000" />
+      <workItem from="1706752964621" duration="97000" />
+      <workItem from="1706753432114" duration="2962000" />
+      <workItem from="1706840719161" duration="874000" />
     </task>
     <task id="LOCAL-00001" summary="Updated shared library.">
       <option name="closed" value="true" />
